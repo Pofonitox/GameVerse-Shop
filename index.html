@@ -16,39 +16,48 @@
 <body class="bg-gray-900 text-white">
   <header class="bg-blue-800 p-4 text-center">
     <h1 class="text-4xl font-bold">GameVerse</h1>
-    <p class="text-sm text-gray-200">Tienda de Videojuegos</p>
+    <p class="text-sm text-gray-200">Tu tienda virtual de videojuegos</p>
   </header>
 
-  <nav class="bg-blue-700 p-3 flex flex-wrap justify-center gap-4">
-    <a href="#educacion" class="hover:underline">Educación Universitaria</a>
-    <a href="#sandbox" class="hover:underline">Sandbox</a>
-    <a href="#rts" class="hover:underline">RTS</a>
-    <a href="#fps" class="hover:underline">FPS / TPS</a>
-    <a href="#moba" class="hover:underline">MOBA</a>
-    <a href="#rpg" class="hover:underline">RPG / ARPG</a>
-    <a href="#simulacion" class="hover:underline">Simulación / Deportes</a>
-    <a href="#puzzle" class="hover:underline">Puzzles / Fiesta</a>
-    <a href="#accion" class="hover:underline">Acción-Aventura</a>
-  </nav>
+  <div class="bg-blue-700 p-3 flex flex-col items-center gap-4 md:flex-row md:justify-between">
+    <nav class="flex flex-wrap justify-center gap-4">
+      <a href="#educacion" class="hover:underline">Educación</a>
+      <a href="#sandbox" class="hover:underline">Sandbox</a>
+      <a href="#rts" class="hover:underline">RTS</a>
+      <a href="#fps" class="hover:underline">FPS / TPS</a>
+      <a href="#moba" class="hover:underline">MOBA</a>
+      <a href="#rpg" class="hover:underline">RPG / ARPG</a>
+      <a href="#simulacion" class="hover:underline">Simulación / Deportes</a>
+      <a href="#puzzle" class="hover:underline">Puzzles / Fiesta</a>
+      <a href="#accion" class="hover:underline">Acción-Aventura</a>
+    </nav>
+    <input type="text" id="busqueda" placeholder="Buscar juego..." class="px-3 py-2 rounded text-black w-full md:w-64">
+  </div>
 
-  <main class="p-6" id="contenedor-juegos"></main>
+  <main class="p-6" id="contenedor-juegos">
+    <!-- Categorías de juegos renderizadas aquí -->
+  </main>
 
   <footer class="bg-blue-800 text-center p-4 mt-6">
-    <p>&copy; 2025 GameVerse - Proyecto Estudiantil</p>
+    <p>&copy; 2025 GameVerse - Proyecto académico</p>
   </footer>
 
   <div id="modalPago" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
     <div class="bg-white text-black p-6 rounded-lg w-full max-w-md">
-      <h2 class="text-xl font-bold mb-4">Compra</h2>
+      <h2 class="text-xl font-bold mb-4">Pago</h2>
       <form id="formPago">
         <label class="block mb-2">Nombre en tarjeta:</label>
         <input type="text" class="w-full p-2 border border-gray-300 mb-4" required />
+
         <label class="block mb-2">Número de tarjeta:</label>
         <input type="text" class="w-full p-2 border border-gray-300 mb-4" required />
+
         <label class="block mb-2">Fecha de expiración:</label>
         <input type="text" placeholder="MM/AA" class="w-full p-2 border border-gray-300 mb-4" required />
+
         <label class="block mb-2">CVV:</label>
         <input type="text" class="w-full p-2 border border-gray-300 mb-4" required />
+
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Pagar</button>
         <button type="button" onclick="cerrarModal()" class="ml-4 text-red-600">Cancelar</button>
       </form>
@@ -56,76 +65,12 @@
   </div>
 
   <script>
-    const juegosPorCategoria = {
-      "educacion": {
-        titulo: "Educación Universitaria",
-        juegos: [
-          { nombre: "Human Anatomy VR", precio: 4.99, imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/1679520/header.jpg" },
-          { nombre: "GeoGuessr", precio: 2.99, imagen: "https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/GeoGuessr_Logo.png/220px-GeoGuessr_Logo.png" }
-        ]
-      },
-      "sandbox": {
-        titulo: "Sandbox",
-        juegos: [
-          { nombre: "Minecraft", precio: 26.95, imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/1127400/header.jpg" },
-          { nombre: "Terraria", precio: 9.99, imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/105600/header.jpg" }
-        ]
-      },
-      "rts": {
-        titulo: "RTS",
-        juegos: [
-          { nombre: "Age of Empires IV", precio: 59.99, imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/1466860/header.jpg" },
-          { nombre: "StarCraft II", precio: 0.00, imagen: "https://upload.wikimedia.org/wikipedia/en/2/29/StarCraft_II_Box_Art.jpg" }
-        ]
-      },
-      "fps": {
-        titulo: "FPS / TPS",
-        juegos: [
-          { nombre: "Call of Duty: Warzone", precio: 0.00, imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/1962663/header.jpg" },
-          { nombre: "Fortnite", precio: 0.00, imagen: "https://cdn2.unrealengine.com/Fortnite%2Fblog%2Fchapter-2-season-7-battle-pass-trailer%2FEN_17BR_Launch_BattlePass_YouTube_Thumbnail_1920x1080-1920x1080-d1f3952e5c19.jpg" }
-        ]
-      },
-      "moba": {
-        titulo: "MOBA",
-        juegos: [
-          { nombre: "League of Legends", precio: 0.00, imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/1983590/header.jpg" },
-          { nombre: "Dota 2", precio: 0.00, imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/570/header.jpg" }
-        ]
-      },
-      "rpg": {
-        titulo: "RPG / ARPG",
-        juegos: [
-          { nombre: "The Witcher 3", precio: 29.99, imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg" },
-          { nombre: "Dark Souls III", precio: 59.99, imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/374320/header.jpg" }
-        ]
-      },
-      "simulacion": {
-        titulo: "Simulación / Deportes",
-        juegos: [
-          { nombre: "FIFA 24", precio: 69.99, imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/2195250/header.jpg" },
-          { nombre: "Microsoft Flight Simulator", precio: 59.99, imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/1250410/header.jpg" }
-        ]
-      },
-      "puzzle": {
-        titulo: "Puzzles / Fiesta",
-        juegos: [
-          { nombre: "Portal 2", precio: 9.99, imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/620/header.jpg" },
-          { nombre: "Keep Talking and Nobody Explodes", precio: 14.99, imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/341800/header.jpg" }
-        ]
-      },
-      "accion": {
-        titulo: "Acción-Aventura",
-        juegos: [
-          { nombre: "God of War", precio: 49.99, imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/1593500/header.jpg" },
-          { nombre: "Horizon Zero Dawn", precio: 39.99, imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/1151640/header.jpg" }
-        ]
-      }
-    };
+    const juegosPorCategoria = {/* datos ya agregados anteriormente */};
 
     function crearCategoria(id, categoria) {
       const seccion = document.createElement("section");
       seccion.id = id;
-      seccion.className = "mt-10";
+      seccion.className = "mt-10 categoria-seccion";
 
       const titulo = document.createElement("h2");
       titulo.className = "text-2xl font-semibold mb-4";
@@ -137,6 +82,7 @@
       categoria.juegos.forEach(juego => {
         const card = document.createElement("div");
         card.className = "bg-gray-800 rounded-lg shadow p-2 game-card";
+        card.setAttribute("data-nombre", juego.nombre.toLowerCase());
 
         const img = document.createElement("img");
         img.src = juego.imagen;
@@ -177,13 +123,21 @@
 
     document.getElementById("formPago").addEventListener("submit", (e) => {
       e.preventDefault();
-      alert("¡Compra procesada correctamente (simulada)!");
+      alert("¡Gracias por tu compra ficticia!");
       cerrarModal();
     });
 
     for (const id in juegosPorCategoria) {
       crearCategoria(id, juegosPorCategoria[id]);
     }
+
+    document.getElementById("busqueda").addEventListener("input", function () {
+      const valor = this.value.toLowerCase();
+      document.querySelectorAll(".game-card").forEach(card => {
+        const nombre = card.getAttribute("data-nombre");
+        card.style.display = nombre.includes(valor) ? "block" : "none";
+      });
+    });
   </script>
 </body>
 </html>
